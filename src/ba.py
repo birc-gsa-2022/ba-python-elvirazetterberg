@@ -52,14 +52,16 @@ def strict_border_array(x: str) -> list[int]:
         return []
 
     else:
-        ba = [0]
+        bax = [0]
         for i in range(len(x)-1):
-            b = ba[i]
+            b = bax[i]
+            prev = b # to allow border of length 1 after a longer border
             while b > 0 and x[i+1] != x[b]:
-                b = ba[b-1]
+                b = bax[b-1]
             if x[i+1] == x[b]:
-                ba[i] = 0
-                ba.append(b+1)
+                if prev > 0 and b+1 > prev:
+                    bax[i] = 0
+                bax.append(b+1)
             else:
-                ba.append(0)
-        return ba
+                bax.append(0)
+        return bax
