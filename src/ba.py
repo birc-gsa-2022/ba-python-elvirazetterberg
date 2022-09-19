@@ -52,16 +52,27 @@ def strict_border_array(x: str) -> list[int]:
         return []
 
     else:
-        bax = [0]
+        x += '$'
+        bax = (len(x)-1)*[0]
         for i in range(len(x)-1):
-            b = bax[i]
-            prev = b # to allow border of length 1 after a longer border
-            while b > 0 and x[i+1] != x[b]:
-                b = bax[b-1]
-            if x[i+1] == x[b]:
-                if prev > 0 and b+1 > prev:
-                    bax[i] = 0
-                bax.append(b+1)
-            else:
-                bax.append(0)
-        return bax
+            print(bax)
+            if x[i+1] == x[0]:
+                o = 1
+                while x[i+1+o] == x[o]: # extendable
+                    o+=1
+                    if x[i+1+o] != x[o]:
+                        bax[i+o] = o
+                        break
+                else:
+                    bax[i+o] = max(o, bax[i+o])
+            
+    return bax
+
+
+
+# def main():
+#     # print(border_array("abaabaa"))
+#     print(strict_border_array("abaabaa")) # for p[6], there is a strict border a.
+
+# if __name__ == "__main__":
+#     main()
