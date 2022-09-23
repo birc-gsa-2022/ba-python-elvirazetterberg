@@ -51,28 +51,47 @@ def strict_border_array(x: str) -> list[int]:
     if len(x) == 0:
         return []
 
-    else:
-        x += '$'
-        bax = (len(x)-1)*[0]
-        for i in range(len(x)-1):
-            print(bax)
-            if x[i+1] == x[0]:
-                o = 1
-                while x[i+1+o] == x[o]: # extendable
-                    o+=1
-                    if x[i+1+o] != x[o]:
-                        bax[i+o] = o
-                        break
-                else:
-                    bax[i+o] = max(o, bax[i+o])
+    # else:
+    #     x += '$'
+    #     bax = (len(x)-1)*[0]
+    #     for i in range(len(x)-1):
+    #         if x[i+1] == x[0]:
+    #             o = 1
+    #             while x[i+1+o] == x[o]: # extendable
+    #                 o+=1
+    #                 if x[i+1+o] != x[o]:
+    #                     bax[i+o] = o
+    #                     break
+    #             else:
+    #                 bax[i+o] = max(o, bax[i+o])
             
+    # return bax
+
+    ba = border_array(x)
+    bax = []
+
+    # bax = ba -->
+    # further improvement:
+    # insert into indexes instead of appending! appending creates overhead:)
+    
+    lastIndex = len(x)-1
+    for i, bai in enumerate(ba):
+        print(bax)
+        if bai == 0:
+            bax.append(0)
+        elif i == lastIndex or x[i+1] != x[bai]:
+            bax.append(bai)
+        else:
+            print(bax[bai-1])
+            bax.append(bax[bai-1])
+
     return bax
 
 
 
-# def main():
-#     # print(border_array("abaabaa"))
-#     print(strict_border_array("abaabaa")) # for p[6], there is a strict border a.
+def main():
+    print(border_array("abaabaa"))
+    print(strict_border_array("abaabaa")) # for p[6], there is a strict border a.
 
-# if __name__ == "__main__":
-#     main()
+if __name__ == "__main__":
+    main()
